@@ -1,0 +1,77 @@
+# Soal 1 Membuat Database
+
+CREATE DATABASE myshop;
+
+
+# Soal 2 Membuat Table di dalam Database
+
+CREATE TABLE users (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE categories (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE items (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    price INTEGER NOT NULL,
+    stock INTEGER NOT NULL,
+    category_id INTEGER,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+
+# Soal 3 Memasukan Data pada Table
+
+INSERT INTO users (name, email, password) VALUES
+('John Doe', 'john@doe.com', 'john123'),
+('Jane Doe', 'jane@doe.com', 'jenita123');
+
+
+INSERT INTO categories (name) VALUES
+('gadget'),
+('cloth'),
+('men'),
+('women'),
+('branded');
+
+
+INSERT INTO items (name, description, price, stock, category_id) VALUES
+('Sumsang b50', 'hape keren dari merek sumsang', 4000000, 100, 1),
+('Uniklooh', 'baju keren dari brand ternama', 500000, 50, 2),
+('IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 10, 1);
+
+
+# Soal 4 Mengambil data dari database
+
+a.Mengambil data users
+SELECT id, name, email FROM users;
+
+b mengambil data items
+  b.1. SELECT * FROM items WHERE price > 1000000;
+  b.2.1. SELECT * FROM items WHERE name LIKE '%uniklo%';
+  b.2.2. SELECT * FROM items WHERE name LIKE '%watch%'; 
+  b.2.3. SELECT * FROM items WHERE name LIKE '%sang%';  
+ 
+c. menampilkan data items join dengan kategori
+SELECT 
+    items.id, 
+    items.name, 
+    items.description, 
+    items.price, 
+    items.stock, 
+    items.category_id, 
+    categories.name AS kategori
+FROM items
+JOIN categories ON items.category_id = categories.id;
+
+# Soal 5 Mengubah data dari database
+UPDATE items 
+SET price = 2500000 
+WHERE name = 'Sumsang b50';
